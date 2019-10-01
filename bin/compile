@@ -120,12 +120,12 @@ if [ ! -x "$CARGO_HOME/bin/rustc" ]; then
   exit 1
 fi
 
-if [ $RUST_WASM == "1" ]; then
-  echo "-----> Deploying WASM"
-  cargo install cargo-web
-  cd "$BUILD_DIR/$BUILD_PATH/wasm"
-  cargo web deploy -o ../public --release
-fi
+
+echo "-----> Deploying WASM"
+cargo install cargo-web
+cd "$BUILD_DIR/$BUILD_PATH/wasm"
+cargo web deploy -o ../public --release
+
 
 
 # This is where we will cache our Rust output.  Note the suggestions at
