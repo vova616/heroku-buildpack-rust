@@ -120,7 +120,7 @@ if [ ! -x "$CARGO_HOME/bin/rustc" ]; then
   exit 1
 fi
 
-if [ $RUST_WASM -ge 1 ]; then
+if [ $RUST_WASM == "1" ]; then
   echo "-----> Deploying WASM"
   cargo install cargo-web
   cd "$BUILD_DIR/$BUILD_PATH/wasm"
