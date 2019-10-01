@@ -114,6 +114,8 @@ else
     echo "-----> Using rustup to install Rust channel $VERSION"
     ./rustup.sh -y --default-toolchain "$VERSION"
     rm rustup.sh
+    echo "-----> Installing WASM"
+    cargo install cargo-web
 fi
 if [ ! -x "$CARGO_HOME/bin/rustc" ]; then
   echo "failed: Cannot find Rust binaries at $CARGO_HOME"
@@ -121,17 +123,13 @@ if [ ! -x "$CARGO_HOME/bin/rustc" ]; then
 fi
 
 
-echo "-----> Deploying WASM"
-cargo install cargo-web
-cd "$BUILD_DIR/$BUILD_PATH/wasm"
-cargo web deploy -o ../public --release
-
-
-
 # This is where we will cache our Rust output.  Note the suggestions at
 # https://github.com/alexcrichton/cargo/commit/014765f788ca1c2476936835ca32cc2746f99b42
 # which describe how this needs to be named.
 export CARGO_TARGET_DIR="$CACHE_DIR/target"
+
+cd "$BUILD_DIR/$BUILD_PATH/wasm"
+cargo web deploy -o ../public --release
 
 if [ $RUST_SKIP_BUILD -ne 1 ]; then
   # Build our project (into CARGO_TARGET_DIR so we have caching) and copy it
