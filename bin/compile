@@ -129,6 +129,11 @@ fi
 export CARGO_TARGET_DIR="$CACHE_DIR/target"
 
 if [ $RUST_SKIP_BUILD -ne 1 ]; then
+  if [ -e "$ENV_DIR/WEB_PROJECT" ]; then
+    WEB_PROJECT = "$ENV_DIR/WEB_PROJECT"
+    cd "$BUILD_DIR/$BUILD_PATH/$WEB_PROJECT"	
+    cargo web deploy -o "$BUILD_DIR/$BUILD_PATH/public" --release
+  fi
   # Build our project (into CARGO_TARGET_DIR so we have caching) and copy it
   # back to the source tree.  In theory, we could probably just copy the
   # binary or do something clever with `cargo install`, but we haven't
