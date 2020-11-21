@@ -114,9 +114,11 @@ else
     echo "-----> Using rustup to install Rust channel $VERSION"
     ./rustup.sh -y --default-toolchain "$VERSION"
     rm rustup.sh
-    echo "-----> Installing WASM"
-    cargo install trunk wasm-bindgen-cli
 fi
+
+echo "-----> Installing WASM"
+cargo install trunk wasm-bindgen-cli
+    
 if [ ! -x "$CARGO_HOME/bin/rustc" ]; then
   echo "failed: Cannot find Rust binaries at $CARGO_HOME"
   exit 1
